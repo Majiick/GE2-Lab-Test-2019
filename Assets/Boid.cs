@@ -107,4 +107,14 @@ public class Boid : MonoBehaviour
             velocity *= (1.0f - (damping * Time.deltaTime));
         }
     }
+
+    public static void SpawnAndArrive(Vector3 spawnPos, GameObject target) {
+        GameObject fighterPrefab = Resources.Load("fighter") as GameObject;
+
+        GameObject go = GameObject.Instantiate(fighterPrefab);
+        go.transform.position = spawnPos;
+        // Boid boid = go.GetComponent<Boid>();
+        var arr = go.AddComponent<Arrive>();
+        arr.targetPosition = new Vector3(0, 100, 0);
+    }
 }
