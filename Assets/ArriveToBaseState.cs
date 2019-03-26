@@ -23,7 +23,7 @@ public class ArriveToBaseState : State {
         if(Vector3.Distance(fighter.transform.position, fighter.parentBase.transform.position) <= 5f) {
             if (fighter.parentBase.GetComponent<Base>().TryRefuel()) {
                 fighter.tiberium = 7;
-                Debug.Log("Switching state to arriving to attack positon.");
+                owner.ChangeState(new ArrivingToAttackPos(fighter));
             }
         }
     }
