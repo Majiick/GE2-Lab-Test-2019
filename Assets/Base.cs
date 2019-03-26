@@ -53,7 +53,7 @@ public class Base : MonoBehaviour {
     void SpawnFighter() {
         Debug.Assert(tiberium >= 10);
 
-        Boid.SpawnAndArrive(transform.position, ChooseTargetBase(), this);
+        Fighter.Spawn(transform.position, ChooseTargetBase(), this);
     }
 
     GameObject ChooseTargetBase() {

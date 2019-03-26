@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public static void SpawnBullet(Vector3 spawnPos, GameObject targetBase, Boid parentBoid) {
+    public static void SpawnBullet(Vector3 spawnPos, GameObject targetBase, Fighter parentFighter) {
         Debug.Assert(targetBase.GetComponent<Base>() != null);
         GameObject bulletPrefab = Resources.Load("bullet") as GameObject;
 
@@ -39,6 +39,6 @@ public class Bullet : MonoBehaviour
         go.transform.position = spawnPos;
         go.transform.LookAt(targetBase.transform.position);
 
-        go.GetComponent<Renderer>().material.color = parentBoid.GetComponent<Renderer>().material.color;
+        go.GetComponent<Renderer>().material.color = parentFighter.GetComponent<Renderer>().material.color;
     }
 }
