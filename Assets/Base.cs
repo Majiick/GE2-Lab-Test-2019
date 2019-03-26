@@ -40,6 +40,10 @@ public class Base : MonoBehaviour {
         }
     }
 
+    public void TakeDamage(float dmg) {
+        tiberium -= dmg;
+    }
+
     void SpawnFighter() {
         Debug.Assert(tiberium >= 10);
 

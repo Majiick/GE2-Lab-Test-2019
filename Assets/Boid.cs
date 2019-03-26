@@ -133,7 +133,7 @@ public class Boid : MonoBehaviour
                 }
                 break;
             case FighterState.Shooting:
-                if (Time.time >= timeLastFiredShot + 0.5) {
+                if (Time.time >= timeLastFiredShot + 0.8f) {
                     if (tiberium >= 1) {
                         FireShot();
                         timeLastFiredShot = Time.time;
@@ -148,11 +148,12 @@ public class Boid : MonoBehaviour
     }
 
     void FireShot() {
-        Debug.Log("Fire shot");
+        Bullet.SpawnBullet(transform.position, targetBase, this);
     }
 
     public static void SpawnAndArrive(Vector3 spawnPos, GameObject targetBase, Base parentBase) {
         Debug.Assert(targetBase.GetComponent<Base>() != null);
+        Debug.Assert(parentBase.GetComponent<Base>() != null);
         GameObject fighterPrefab = Resources.Load("fighter") as GameObject;
 
         GameObject go = GameObject.Instantiate(fighterPrefab);
