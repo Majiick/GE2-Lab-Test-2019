@@ -14,6 +14,7 @@ public class Base : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        tiberium = 5;
         foreach (Renderer r in GetComponentsInChildren<Renderer>()) {
             r.material.color = Color.HSVToRGB(Random.Range(0.0f, 1.0f), 1, 1);
         }
@@ -21,10 +22,15 @@ public class Base : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        text.text = "" + Mathf.RoundToInt(tiberium);
-        tiberium += Time.deltaTime * 5.0f;
+        // Round to 1 decimal place using string, not the best method.
+        var tibStr = tiberium.ToString();
+        if (tibStr.Contains(".")) {
+            tibStr = tibStr.Substring(0, tibStr.IndexOf(".") + 2);
+        }
+        text.text = tibStr;
+        tiberium += Time.deltaTime * 1.0f;
 
-        if (tiberium >= 10 && !spawned) {
+        if (tiberium >= 10 /*&& !spawned*/) {
             SpawnFighter();
             tiberium -= 10;
             spawned = true;

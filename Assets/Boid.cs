@@ -125,15 +125,16 @@ public class Boid : MonoBehaviour
                 break;
             case FighterState.GoingBackToBase:
                 GetComponent<Arrive>().targetPosition = parentBase.transform.position;
-                if (Vector3.Distance(transform.position, parentBase.transform.position) <= 10f) {
+                if (Vector3.Distance(transform.position, parentBase.transform.position) <= 5f) {
                     if (parentBase.GetComponent<Base>().TryRefuel()) {
                         fighterState = FighterState.ArrivingToAttackPosition;
+                        tiberium = 7;
                         Debug.Log("Switching state to arriving to attack positon.");
                     }
                 }
                 break;
             case FighterState.Shooting:
-                if (Time.time >= timeLastFiredShot + 0.8f) {
+                if (Time.time >= timeLastFiredShot + 0.6f) {
                     if (tiberium >= 1) {
                         FireShot();
                         timeLastFiredShot = Time.time;
@@ -156,17 +157,20 @@ public class Boid : MonoBehaviour
         Debug.Assert(parentBase.GetComponent<Base>() != null);
         GameObject fighterPrefab = Resources.Load("fighter") as GameObject;
 
+        // Instantiate fighter and set its public variables, position and color
         GameObject go = GameObject.Instantiate(fighterPrefab);
         go.transform.position = spawnPos;
         go.GetComponent<Boid>().targetBase = targetBase;
         go.GetComponent<Boid>().parentBase = parentBase.gameObject;
         go.GetComponent<Renderer>().material.color = parentBase.GetComponent<Renderer>().material.color;
+        // Set children colors as well
         foreach (Transform child in go.transform) {
             if (child.GetComponent<Renderer>() != null) {
                 child.GetComponent<Renderer>().material.color = parentBase.GetComponent<Renderer>().material.color;
             }
         }
 
+        // Add arrive to fighter
         var arr = go.AddComponent<Arrive>();
         arr.targetPosition = Vector3.Lerp(spawnPos, targetBase.transform.position, 0.8f);
     }

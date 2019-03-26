@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collider) {
-        Debug.Log(collider.name);
+        // Could use the project settings physics collision matrix instead.
         if (collider.GetComponent<Base>() != null) {
             collider.GetComponent<Base>().TakeDamage(0.5f);
             KillMe();
@@ -34,6 +34,7 @@ public class Bullet : MonoBehaviour
         Debug.Assert(targetBase.GetComponent<Base>() != null);
         GameObject bulletPrefab = Resources.Load("bullet") as GameObject;
 
+        // Instantiate bullet and set its position and rotation and change its color
         GameObject go = GameObject.Instantiate(bulletPrefab);
         go.transform.position = spawnPos;
         go.transform.LookAt(targetBase.transform.position);
