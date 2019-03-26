@@ -4,23 +4,29 @@ using UnityEngine;
 
 public class Fighter : MonoBehaviour
 {
+    StateMachine stateMachine;
     public GameObject targetBase;
     public GameObject parentBase;
-    float tiberium;
-    float timeLastFiredShot = 0;
+    public float tiberium;
+    public float timeLastFiredShot = 0;
 
+    /*
     public enum FighterState { ArrivingToAttackPosition, Shooting, GoingBackToBase };
     FighterState fighterState = FighterState.ArrivingToAttackPosition;
+    */
 
     // Start is called before the first frame update
     void Start()
     {
+        stateMachine = gameObject.AddComponent<StateMachine>();
+        stateMachine.ChangeState(new ArrivingToAttackPos(this));
         tiberium = 7;
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         switch (fighterState) {
             case FighterState.ArrivingToAttackPosition:
                 GetComponent<Arrive>().targetPosition = Vector3.Lerp(parentBase.transform.position, targetBase.transform.position, 0.8f);
@@ -52,6 +58,7 @@ public class Fighter : MonoBehaviour
                 }
                 break;
         }
+        */
     }
 
     void FireShot() {

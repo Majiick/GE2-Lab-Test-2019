@@ -26,13 +26,13 @@ public class StateMachine : MonoBehaviour {
 
     private void OnEnable()
     {        
-        StartCoroutine(Think());
+        //StartCoroutine(Think());
     }
     
 
     // Update is called once per frame
     void Update () {
-		
+        Think();
 	}
 
     public void ChangeStateDelayed(State newState, float delay)
@@ -73,21 +73,13 @@ public class StateMachine : MonoBehaviour {
         currentState.Enter();
     }
 
-    System.Collections.IEnumerator Think()
+    void Think()
     {
-        yield return new WaitForSeconds(Random.Range(0, 0.5f));
-        while (true)
-        {
-            if (globalState != null)
-            {
-                globalState.Think();
-            }
-            if (currentState != null)
-            {
-                currentState.Think();
-            }
-            
-            yield return new WaitForSeconds(1.0f / (float)updatesPerSecond);
+        if (globalState != null) {
+            globalState.Think();
+        }
+        if (currentState != null) {
+            currentState.Think();
         }
     }    
 }
