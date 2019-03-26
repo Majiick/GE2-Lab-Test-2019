@@ -12,17 +12,20 @@ public class Boid : MonoBehaviour
     public float mass = 1;
 
     [Range(0.0f, 10.0f)]
-    public float damping = 0.01f;
+    public float damping = 0.05f;
 
     [Range(0.0f, 1.0f)]
     public float banking = 0.1f;
     public float maxSpeed = 5.0f;
     public float maxForce = 10.0f;
+    public GameObject targetBase;
+    float tiberium;
 
 
     // Use this for initialization
     void Start()
     {
+        tiberium = 7;
 
         SteeringBehaviour[] behaviours = GetComponents<SteeringBehaviour>();
 
@@ -108,13 +111,21 @@ public class Boid : MonoBehaviour
         }
     }
 
-    public static void SpawnAndArrive(Vector3 spawnPos, GameObject target) {
+    public static void SpawnAndArrive(Vector3 spawnPos, GameObject targetBase, Base parentBase) {
+        Debug.Assert(targetBase.GetComponent<Base>() != null);
         GameObject fighterPrefab = Resources.Load("fighter") as GameObject;
 
         GameObject go = GameObject.Instantiate(fighterPrefab);
         go.transform.position = spawnPos;
-        // Boid boid = go.GetComponent<Boid>();
+        go.GetComponent<Boid>().targetBase = targetBase;
+        go.GetComponent<Renderer>().material.color = parentBase.GetComponent<Renderer>().material.color;
+        foreach (Transform child in go.transform) {
+            if (child.GetComponent<Renderer>() != null) {
+                child.GetComponent<Renderer>().material.color = parentBase.GetComponent<Renderer>().material.color;
+            }
+        }
+
         var arr = go.AddComponent<Arrive>();
-        arr.targetPosition = new Vector3(0, 100, 0);
+        arr.targetPosition = targetBase.transform.position;
     }
 }

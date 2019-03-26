@@ -16,8 +16,6 @@ public class Base : MonoBehaviour {
         foreach (Renderer r in GetComponentsInChildren<Renderer>()) {
             r.material.color = Color.HSVToRGB(Random.Range(0.0f, 1.0f), 1, 1);
         }
-
-        Boid.SpawnAndArrive(transform.position, null);
     }
 
     // Update is called once per frame
@@ -33,5 +31,20 @@ public class Base : MonoBehaviour {
 
     void SpawnFighter() {
         Debug.Assert(tiberium >= 10);
+
+
+        Boid.SpawnAndArrive(transform.position, ChooseTargetBase(), this);
+    }
+
+    GameObject ChooseTargetBase() {
+        List<Base> otherBases = new List<Base>();
+        
+        foreach (var base_ in GameObject.FindObjectsOfType<Base>()) {
+            if (base_ != this) {
+                otherBases.Add(base_);
+            }
+        }
+
+        return otherBases[Random.Range(0, otherBases.Count)].gameObject;
     }
 }
