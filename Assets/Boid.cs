@@ -126,9 +126,10 @@ public class Boid : MonoBehaviour
             case FighterState.GoingBackToBase:
                 GetComponent<Arrive>().targetPosition = parentBase.transform.position;
                 if (Vector3.Distance(transform.position, parentBase.transform.position) <= 10f) {
-                    tiberium += 7;
-                    fighterState = FighterState.ArrivingToAttackPosition;
-                    Debug.Log("Switching state to arriving to attack positon.");
+                    if (parentBase.GetComponent<Base>().TryRefuel()) {
+                        fighterState = FighterState.ArrivingToAttackPosition;
+                        Debug.Log("Switching state to arriving to attack positon.");
+                    }
                 }
                 break;
             case FighterState.Shooting:

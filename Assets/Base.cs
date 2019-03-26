@@ -31,9 +31,17 @@ public class Base : MonoBehaviour {
         }
     }
 
+    public bool TryRefuel() {
+        if (tiberium >= 7) {
+            tiberium -= 7;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     void SpawnFighter() {
         Debug.Assert(tiberium >= 10);
-
 
         Boid.SpawnAndArrive(transform.position, ChooseTargetBase(), this);
     }
