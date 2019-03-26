@@ -9,6 +9,7 @@ public class Base : MonoBehaviour {
     public TextMeshPro text;
 
     public GameObject fighterPrefab;
+    bool spawned = false;
 
 
     // Start is called before the first frame update
@@ -23,9 +24,10 @@ public class Base : MonoBehaviour {
         text.text = "" + Mathf.RoundToInt(tiberium);
         tiberium += Time.deltaTime * 5.0f;
 
-        if (tiberium >= 10) {
+        if (tiberium >= 10 && !spawned) {
             SpawnFighter();
             tiberium -= 10;
+            spawned = true;
         }
     }
 
